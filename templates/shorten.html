@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+
+{% block main %}
+  <form action="" method="POST" accept-charset="utf-8" id="form" class="rounded">
+    <label for="url" style="display: none;">URL</label>
+    <input type="text" name="url"{% if error %} value="{{ url }}"{% endif %} id="text" class="rounded2" placeholder="Enter URL to shorten">
+    <input type="submit" value="Shorten" id="submit" class="rounded2">
+  </form>
+  {% if error %}
+    <p id="error">
+      {% if url == 'http://' %}
+        Please enter a URL
+      {% else %}
+        We checked and that url doesn't seem to exist. Are you sure it's correct?
+      {% endif %}
+    </p>
+  {% endif %}
+  {% if key %}<p id="short" class="rounded">Your short URL is <a href="{{ request.base_url }}{{ key }}">{{ request.base_url }}{{ key }}</a></p>{% endif %}
+{% endblock %}

@@ -1,0 +1,62 @@
+html {
+  font-family: Helvetica, Verdana, Arial, Helvetica, sans-serif;
+  background-color: #870920; font-size: 14px; color: #EEEEEE;
+  text-shadow: #333333 0px 2px 0px;
+}
+a {
+  color: #EEEEEE; text-decoration: none; font-weight: bold;
+}
+a:hover {
+  color: #FFFFFF;
+}
+#main {
+  width: 600px; margin: 0 auto;
+}
+h1 {
+  font-family: 'Hammersmith One', sans-serif; text-align: center; color: #EEEEEE;
+  font-size: 50px; text-shadow: #333333 0px 2px 0px;
+}
+#text {
+  border: none; padding: 8px 8px; width: 474px; font-size: 22px; color: #222222;
+}
+#form {
+  background-color: #e0e0e0; padding: 10px; position: relative;
+}
+#submit {
+  border: none; padding: 0 14px 0 14px; font-weight: bold; position: absolute;
+  right: 9px; font-size: 12px; color: #FFFFFF; height: 42px; top: 12px;
+  text-shadow: #000000 0px 1px 0px; cursor: pointer; background-color: #870920;
+}
+#submit:hover {
+  background-color: #A40B27;
+}
+#error {
+  text-align: center;
+}
+#short {
+  background-color: #EEEEEE; text-align: center; padding: 12px 0px 10px 0px;
+  color: #222222; font-weight: bold; text-shadow: #FFFFFF 0px 2px 0px;
+  font-size: 16px; line-height: 16px;
+}
+#short a {
+  color: #222222;
+}
+#short a:hover {
+  text-decoration: underline;
+}
+footer {
+  text-align: center; margin-top: 20px; font-size: 12px;
+}
+.rounded {
+  -webkit-border-radius: 3px;
+     -moz-border-radius: 3px;
+          border-radius: 3px;
+  -webkit-box-shadow: 0 1px 3px #333333;
+     -moz-box-shadow: 0 1px 3px #333333;
+          box-shadow: 0 1px 3px #333333;
+}
+.rounded2 {
+  -webkit-border-radius: 2px;
+     -moz-border-radius: 2px;
+          border-radius: 2px;
+}

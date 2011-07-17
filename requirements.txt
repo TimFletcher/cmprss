@@ -1,0 +1,3 @@
+Flask
+Flask-Testing
+hg+https://code.google.com/p/httplib2/
