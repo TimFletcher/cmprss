@@ -15,7 +15,11 @@ app.url_map.strict_slashes = False
 def before_request():
     """Connect to database
     """
-    g.db = psycopg2.connect("dbname=cmprss user=cmprss")
+    g.db = psycopg2.connect("dbname=%s user=%s" % (
+        os.environ.get('DATABASE_NAME'),
+        os.environ.get('DATABASE_USER')
+    ))
+
 
 @app.teardown_request
 def teardown_request(exception):
