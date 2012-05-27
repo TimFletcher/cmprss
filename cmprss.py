@@ -1,24 +1,21 @@
-import os
-import sqlite3
 import httplib2
+import os
+import psycopg2
 from flask import Flask, g, render_template, request, redirect
 from shortener import id_to_base64, base64_to_id
 
 # Settings
 ROOT = os.path.dirname(os.path.abspath(__file__))
-DATABASE = os.path.join(ROOT, 'database.sqlite3')
 
 # App Config
 app = Flask(__name__)
 app.url_map.strict_slashes = False
 
-
 @app.before_request
 def before_request():
     """Connect to database
     """
-    g.db = sqlite3.connect(DATABASE)
-
+    g.db = psycopg2.connect("dbname=cmprss user=cmprss")
 
 @app.teardown_request
 def teardown_request(exception):
@@ -52,10 +49,10 @@ def shorten_url(c, url):
     """Insert a new record to get its id, update the record with the key and
     query again for the record to return it.
     """
-    c.execute('INSERT INTO urls VALUES (NULL, NULL, ?)', (url,))
-    id = c.lastrowid
-    c.execute('UPDATE urls SET key = ? WHERE id = ?', (id_to_base64(id), id))
-    c.execute('SELECT * FROM urls WHERE id = ?', (id,))
+    c.execute('INSERT INTO urls (url) VALUES (%s) RETURNING urls.id', (url,))
+    id = c.fetchone()[0]
+    c.execute('UPDATE urls SET key = %s WHERE id = %s', (id_to_base64(id), id))
+    c.execute('SELECT * FROM urls WHERE id = %s', (id,))
     return c.fetchone()[1]
 
 
@@ -68,7 +65,7 @@ def shorten():
         url = normalise_url(request.form.get('url', None))
         if url and url_exists(url):
             c = g.db.cursor()
-            c.execute('SELECT * FROM urls WHERE url = ?', (url,))
+            c.execute('SELECT * FROM urls WHERE url = %s', (url,))
             result = c.fetchone()
             if result:
                 key = result[1]
@@ -87,7 +84,7 @@ def expand(base64):
     found, otherwise show an error page with a 404 status code.
     """
     c = g.db.cursor()
-    c.execute('SELECT * FROM urls WHERE key = ?', (base64,))
+    c.execute('SELECT * FROM urls WHERE key = %s', (base64,))
     result = c.fetchone()
     g.db.commit()
     c.close()
