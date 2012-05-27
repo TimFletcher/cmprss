@@ -1,6 +1,7 @@
 import httplib2
 import os
 import psycopg2
+import urlparse
 from flask import Flask, g, render_template, request, redirect
 from shortener import id_to_base64, base64_to_id
 
@@ -15,11 +16,14 @@ app.url_map.strict_slashes = False
 def before_request():
     """Connect to database
     """
-    g.db = psycopg2.connect("dbname=%s user=%s" % (
-        os.environ.get('DATABASE_NAME'),
-        os.environ.get('DATABASE_USER')
-    ))
-
+    urlparse.uses_netloc.append('postgres')
+    url = urlparse.urlparse(os.environ['DATABASE_URL'])
+    g.db = psycopg2.connect("dbname=%s user=%s password=%s host=%s " % (
+        url.path[1:],
+        url.username,
+        url.password,
+        url.hostname)
+    )
 
 @app.teardown_request
 def teardown_request(exception):
