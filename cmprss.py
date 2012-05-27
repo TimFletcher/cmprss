@@ -93,16 +93,9 @@ def expand(base64):
     else:
         return render_template('error.html'), 404
 
-
-if __name__ == '__main__':
-    app.run(debug=True)
-
-
 if __name__ == '__main__':
     # Bind to PORT if defined, otherwise default to 5000.
     port = int(os.environ.get('PORT', 5000))
     debug = True if port == 5000 else False
-    app.run(host='0.0.0.0', port=port)
-
-
+    app.run(host='0.0.0.0', port=port, debug=debug)
 
