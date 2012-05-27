@@ -17,8 +17,8 @@ def before_request():
     """Connect to database
     """
     urlparse.uses_netloc.append('postgres')
-    url = urlparse.urlparse(os.environ['DATABASE_URL'])
-    g.db = psycopg2.connect("dbname=%s user=%s password=%s host=%s " % (
+    url = urlparse.urlparse(os.environ['HEROKU_POSTGRESQL_CRIMSON_URL'])
+    g.db = psycopg2.connect("dbname=%s user=%s password=%s host=%s" % (
         url.path[1:],
         url.username,
         url.password,
